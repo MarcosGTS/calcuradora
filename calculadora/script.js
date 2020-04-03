@@ -46,7 +46,7 @@ for(let j = 0; j < sinals.length; j++){
                     result = Number(result) * Number(numAtual)
                     break;
                 default:
-                    result ="error"
+                    
             }
         }
 
@@ -57,6 +57,8 @@ for(let j = 0; j < sinals.length; j++){
 }
 
 equal.addEventListener('click',function(){
+    
+    
     switch(sinalA){
         case "+":
             result = Number(result) + Number(numAtual)
@@ -73,6 +75,11 @@ equal.addEventListener('click',function(){
         default:
             result ="error"
     }
+
+    numAtual = "";
+    sinalA = "";
+    sinalS = "";
+    
     display.innerHTML = `<p>${result}<br>${sinalA} ${numAtual}</p>`
 })
 
