@@ -11,8 +11,8 @@ var display = el("#display"); // area de display
 var sinals = el(".operator")
 var equal = el("#equals");
 var apagar = el("#apagar")
+var cA = el('#cA');
 var numAtual = "";
-var numSecundario = "";
 var result  = "";
 var sinalA = ""
 var sinalS = ""
@@ -57,8 +57,7 @@ for(let j = 0; j < sinals.length; j++){
 }
 
 apagar.addEventListener('click', function(){
-    numAtual = ""
-   
+    numAtual = ""  
 })
 
 equal.addEventListener('click',function(){
@@ -89,6 +88,15 @@ equal.addEventListener('click',function(){
 
 for(let k = 0; k < botoes.length; k++){
     botoes[k].addEventListener('click',function(){
-        display.innerHTML = `<p>${result}<br>${sinalA} ${numAtual}</p>`
+        display.innerHTML = `<p>${result}<br>${sinalA} ${Number(numAtual)}</p>`
     })
 }
+
+cA.addEventListener('click', function(){
+    numAtual = 0; 
+    sinalA ="";
+    sinalS = "";
+    result = "";
+    display.innerHTML = `<p>${result}<br>${sinalA} ${Number(numAtual)}</p>`
+
+})

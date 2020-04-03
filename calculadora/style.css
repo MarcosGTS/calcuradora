@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 body{
-    background-color: #004280;
+    background: linear-gradient(to right, #780DFF, #310CE8,#310CE8);
     color: whitesmoke;
     font-family: 'Roboto', sans-serif;
 }
@@ -9,40 +9,52 @@ body{
 h1{
     text-align: center;
 }
-#apagar {
-    grid-column: span 2;
+
+p{
+    margin:0;
+    font-size: x-large;
+    font-weight: bold;
 }
+
 #equals{
     grid-row: span 2;
 }
 
 #calculadora{
-    background-color: #2614CC;
+    background-color: #222C80;
     width: 10em;
     border-radius: 10px;
-    padding: 5px 2.5px;
+    padding: 1em 0.5em;
     margin: 0 auto;
 }
+
 #display{
-    background-color:#265480;
+    background-color:#919CFF;
     margin: 0 auto;
-    height: 3em;
+    height: 4em;
     width: 9em;
     text-align: right; 
     border-radius: 4px;
     margin-bottom: 10px;
+    padding: 0.5em 0.25em; 
+
 }
 
 #botoes{
     display: grid;
     grid-template-columns: 3em 3em 3em;
+    grid-template-rows: 3em 3em 3em 3em 3em 3em;
     justify-content: center;
     
 }
 
 button{
     background-color:#265480;
-    border-radius: 5px;
-    border: whitesmoke 0.25px solid;
-    color:whitesmoke
+    border:none;
+    color:whitesmoke;
+}
+
+
+button:hover{
+    background-color: #1d4162;
 }
