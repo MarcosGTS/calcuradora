@@ -10,17 +10,17 @@ var numbers = el(".number"); //  conjunto dos numeros
 var display = el("#display"); // area de display
 var sinals = el(".operator")
 var equal = el("#equals");
+var apagar = el("#apagar")
 var numAtual = "";
 var numSecundario = "";
 var result  = "";
 var sinalA = ""
 var sinalS = ""
-
+var botoes = document.querySelectorAll('button')
 
 for(let i = 0; i < numbers.length; i++){
     numbers[i].addEventListener('click', function(){
         numAtual += this.getAttribute('data-num');
-        display.innerHTML = `<p>${result}<br>${sinalA} ${numAtual}</p>`
     })    
 }
 
@@ -52,9 +52,14 @@ for(let j = 0; j < sinals.length; j++){
 
         numAtual = "";
         console.log(result)
-        display.innerHTML = `<p>${result}<br>${sinalA} ${numAtual}</p>`
+       
     })
 }
+
+apagar.addEventListener('click', function(){
+    numAtual = ""
+   
+})
 
 equal.addEventListener('click',function(){
     
@@ -73,13 +78,17 @@ equal.addEventListener('click',function(){
             result = Number(result) * Number(numAtual)
             break;
         default:
-            result ="error"
+            console.log("error")
     }
 
     numAtual = "";
     sinalA = "";
     sinalS = "";
     
-    display.innerHTML = `<p>${result}<br>${sinalA} ${numAtual}</p>`
 })
 
+for(let k = 0; k < botoes.length; k++){
+    botoes[k].addEventListener('click',function(){
+        display.innerHTML = `<p>${result}<br>${sinalA} ${numAtual}</p>`
+    })
+}
