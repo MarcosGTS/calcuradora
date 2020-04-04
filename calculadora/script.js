@@ -86,17 +86,17 @@ equal.addEventListener('click',function(){
     
 })
 
-for(let k = 0; k < botoes.length; k++){
-    botoes[k].addEventListener('click',function(){
-        display.innerHTML = `<p>${result}<br>${sinalA} ${Number(numAtual)}</p>`
-    })
-}
-
 cA.addEventListener('click', function(){
     numAtual = 0; 
     sinalA ="";
     sinalS = "";
     result = "";
-    display.innerHTML = `<p>${result}<br>${sinalA} ${Number(numAtual)}</p>`
-
 })
+
+for(let k = 0; k < botoes.length; k++){
+    botoes[k].addEventListener('click',function(){
+        document.querySelector('#resultado').innerText = `${Number(result)}`;
+        document.querySelector('#numeroA').innerText = `${sinalA} ${Number(numAtual)}`;
+    })
+}
+

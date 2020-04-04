@@ -10,18 +10,12 @@ h1{
     text-align: center;
 }
 
-p{
-    margin:0;
-    font-size: x-large;
-    font-weight: bold;
-}
-
 #equals{
     grid-row: span 2;
 }
 
 #calculadora{
-    background-color: #222C80;
+    background-color: rgb(47, 55, 128);
     width: 10em;
     border-radius: 10px;
     padding: 1em 0.5em;
@@ -29,15 +23,25 @@ p{
 }
 
 #display{
-    background-color:#919CFF;
+    background-color:#5D64FF;
     margin: 0 auto;
     height: 4em;
     width: 9em;
-    text-align: right; 
     border-radius: 4px;
     margin-bottom: 10px;
     padding: 0.5em 0.25em; 
-
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    justify-content: space-around;
+    word-wrap: break-word;
+    word-break: break-all;
+   
+}
+#display > div{
+    font-size: 1rem;
+    font-weight: bold;
+  
 }
 
 #botoes{
@@ -49,12 +53,15 @@ p{
 }
 
 button{
-    background-color:#265480;
+    background-color:#2B36FF;
     border:none;
     color:whitesmoke;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
 }
 
 
 button:hover{
-    background-color: #1d4162;
+    background-color: rgb(34, 42, 194);
 }
+
