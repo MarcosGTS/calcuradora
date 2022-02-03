@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #ddbea9;
+}
+
+.calculator {  
+    margin: 0 auto;
+    max-width: 400px;
+
+    padding: 16px;
+    border-radius: 10px;
+
+    background-color: gray;
+}
+
+.display {
+    padding: 16px;
+
+    margin-bottom: 16px;
+    border-radius: 5px;
+
+    background-color: green;
+    text-align: end;
+
+    font-family: "Orbitron";
+
+    text-overflow: wrap;
+}
+
+.expression {
+    height: 80%;
+    font-size: 32px;
+    margin-bottom: 16px;
+}
+
+.preview {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.keys {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+}
+
+.span {
+    grid-column: 2 span;
+}
+
+button {
+    height: 69px;
+
+    font-size: large;
+}
