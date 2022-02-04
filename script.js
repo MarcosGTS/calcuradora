@@ -12,52 +12,98 @@ const operations = {
     "/": (a, b) => a / b,
 }
 
+let register = [];
+
 function operate(a, b, operator) {
-    return operations[operator](a, b);
+    if (operator in operations)
+        return operations[operator](+a, +b);
 }
 
 const buttons = document.querySelectorAll("button");
+const expression = document.querySelector(".expression");
+const preview = document.querySelector(".preview");
 
 buttons.forEach(btn => btn.addEventListener("click", updateCalculator))
+document.addEventListener("keydown", updateCalculator)
 
 function updateCalculator(e) {
-
-    const display = document.querySelector(".expression");
-    const preview = document.querySelector(".preview");
     //update expression
-    //updateExpression(e);
-    //evaluete expression
-    const value = evalueteExp(display.textContent);
-    //updatePreview
-    preview.textContent = value;
-}
-
-function updateExpression(e) {
-    return 0;
-}
-
-function evalueteExp (exp) {
-    let el = exp.split(/\s+/);
-
-    //converting str to numbers
-    el = el.map(num => Number(num) ? +num : num);
+    updateExpression(e);
     
-    while (el.length > 1) {
+    //evaluete expression
+    const value = evalueteExp([...register]);
+   
+    //updatePreview
+    preview.textContent = (register.length >= 3) ? value : "";
+    expression.innerHTML = register.join(" ");
+}
+
+function updateExpression(e) { 
+    const key =  e.key || e.target.dataset.key;
+    
+    register = expression.textContent
+        .split(/\s+/)
+
+    // unary operator 
+    if (!Number(register[0])) register.shift();
+
+    // clear
+    if (key === "Backspace"){
+        if (register.length > 0) {
+            let last = register.pop();
+            
+            if (last.length > 1) {
+                last = last.slice(0, -1);
+                register.push(last);
+            }  
+        }  
+    }
+
+    if (!isNaN(key)) {
+        let last = register.slice(-1); 
+
+        if (Number(last)) 
+            register[register.length - 1] += key;
+        else 
+            register.push(key);   
+    } 
+     
+    if (key in operations) {
+        let last = register.slice(-1);
+        if (!(last in operations)) register.push(key);
+    }
+
+    //decimal number
+    if (key == ".") {
+        let last = register.pop()
+        if (!last.includes(".")) register.push(last + ".")
+    }
+
+    if (key == "=") {
+        register = [evalueteExp(register)];
+    }
+
+    return register;
+}
+
+function evalueteExp(exp) {
+    if (exp.length % 2 == 0) exp.pop();
+
+    while (exp.length > 1) {
         //find highest operand
-        let highestOp = el.reduce((op, crr) => {
+        let highestOp = exp.reduce((op, crr) => {
             if (Number(crr)) return op;
             return evalPrecedence(op, crr) ? op : crr;
         })
 
         //find first ocurrence
-        let index = el.indexOf(highestOp);
+        let index = exp.indexOf(highestOp);
 
-        //
-        let [op1, operator, op2] = el.splice(index - 1, 3);  
-        el.splice(index - 1, 0, operate(op1, op2, operator))
+        let [op1, operator, op2] = exp.splice(index - 1, 3); 
+        exp.splice(index - 1, 0, operate(op1, op2, operator));
     }
 
-    return el;
+    return Number(exp) || [];
 }
 
 function evalPrecedence(op1, op2) {
