@@ -44,43 +44,28 @@ function updateExpression(e) {
     register = expression.textContent
         .split(/\s+/)
 
-    // unary operator 
+    // prevent irregular operators
     if (!Number(register[0])) register.shift();
 
-    // clear
-    if (key === "Backspace"){
-        if (register.length > 0) {
-            let last = register.pop();
-            
-            if (last.length > 1) {
-                last = last.slice(0, -1);
-                register.push(last);
-            }  
-        }  
-    }
-
-    if (!isNaN(key)) {
-        let last = register.slice(-1); 
-
-        if (Number(last)) 
-            register[register.length - 1] += key;
-        else 
-            register.push(key);   
-    } 
-     
-    if (key in operations) {
-        let last = register.slice(-1);
-        if (!(last in operations)) register.push(key);
-    }
-
-    //decimal number
-    if (key == ".") {
-        let last = register.pop()
-        if (!last.includes(".")) register.push(last + ".")
-    }
-
-    if (key == "=") {
-        register = [evalueteExp(register)];
+    switch (true) {
+        case !isNaN(key): 
+            addNumber(key); 
+            break;      
+        case key in operations: 
+            addOperator(key); 
+            break;
+        case key == "Backspace":
+            clear();
+            break;
+        case key == ".":
+            addDecimalPoint();
+            break;
+        case key == "=":
+            evaluete();
+            break;
+        case key == "clear":
+            clearAll();
+            break;
     }
 
     return register;
@@ -108,4 +93,42 @@ function evalueteExp(exp) {
 
 function evalPrecedence(op1, op2) {
     return precedence[op1] >= precedence[op2];
+}
+
+function clear() {
+    if (register.length > 0) {
+        let last = register.pop();
+        last = last.slice(0, -1);
+
+        if (last) register.push(last);
+    }
+}
+
+function clearAll() {
+    register = [];
+}
+
+function addOperator(key) {
+    let last = register.slice(-1);
+    last in operations || register.push(key);
+}
+
+function addNumber(key) {
+    let last = register.pop(); 
+
+    if (Number(last)) {
+        register.push(last + key);
+    } else {
+        register.push(last);
+        register.push(key);
+    }    
+}
+
+function evaluete() {
+    register = [evalueteExp(register)];
+}
+
+function addDecimalPoint() {
+    let last = register.pop();
+    last.includes(".") || register.push(last + ".");
 }
