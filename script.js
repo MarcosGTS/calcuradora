@@ -29,13 +29,14 @@ document.addEventListener("keydown", updateCalculator)
 function updateCalculator(e) {
     //update expression
     updateExpression(e);
-    
+
     //evaluete expression
     const value = evalueteExp([...register]);
-   
+    
     //updatePreview
-    preview.textContent = (register.length >= 3) ? value : "";
     expression.innerHTML = register.join(" ");
+    preview.textContent = (register.length >= 3) ? value : "";
+    
 }
 
 function updateExpression(e) { 
@@ -45,7 +46,7 @@ function updateExpression(e) {
         .split(/\s+/)
 
     // prevent irregular operators
-    if (!Number(register[0])) register.shift();
+    if (!isNumber(register[0])) register.shift();
 
     switch (true) {
         case !isNaN(key): 
@@ -72,12 +73,13 @@ function updateExpression(e) {
 }
 
 function evalueteExp(exp) {
+   
     if (exp.length % 2 == 0) exp.pop();
 
-    while (exp.length > 1) {
+    while (exp.length > 2) {
         //find highest operand
         let highestOp = exp.reduce((op, crr) => {
-            if (Number(crr)) return op;
+            if (isNumber(crr)) return op;
             return evalPrecedence(op, crr) ? op : crr;
         })
 
@@ -88,7 +90,7 @@ function evalueteExp(exp) {
         exp.splice(index - 1, 0, operate(op1, op2, operator));
     }
 
-    return Number(exp) || [];
+    return exp;
 }
 
 function evalPrecedence(op1, op2) {
@@ -115,13 +117,18 @@ function addOperator(key) {
 
 function addNumber(key) {
     let last = register.pop(); 
+    if (!last) {
+        register.push(key)
+        return
+    }
 
-    if (Number(last)) {
+    if (isNumber(last)) {
         register.push(last + key);
-    } else {
-        register.push(last);
-        register.push(key);
-    }    
+        return
+    }
+
+    register.push(last);
+    register.push(key);
 }
 
 function evaluete() {
@@ -133,4 +140,8 @@ function addDecimalPoint() {
     
     last.includes(".") || (last += ".");
     register.push(last);
+}
+
+function isNumber(el) {
+    return Number(el) || Number(el) === 0;
 }
