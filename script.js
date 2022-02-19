@@ -130,5 +130,7 @@ function evaluete() {
 
 function addDecimalPoint() {
     let last = register.pop();
-    last.includes(".") || register.push(last + ".");
+    
+    last.includes(".") || (last += ".");
+    register.push(last);
 }
